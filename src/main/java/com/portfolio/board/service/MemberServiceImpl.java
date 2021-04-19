@@ -19,6 +19,7 @@ public class MemberServiceImpl implements MemberService{
 
 
     @Override
+    @Transactional
     public Long save(Member member) {
         return memberRepository.save(member);
     }

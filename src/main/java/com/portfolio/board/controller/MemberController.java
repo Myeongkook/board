@@ -36,4 +36,15 @@ public class MemberController {
         }
         return "index";
     }
+
+    @RequestMapping(value = "/signup",method = RequestMethod.GET)
+    public String Signup(){
+        return "signup";
+    }
+    @RequestMapping(value = "/signup",method = RequestMethod.POST)
+    public String Signup(Member member){
+        memberService.save(member);
+        // mailService.sendCertificate
+        return "redirect:/index";
+    }
 }

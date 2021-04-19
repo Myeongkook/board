@@ -16,11 +16,11 @@ public class Member {
     @GeneratedValue
     @Column(name = "member_no")
     private Long id;
-    @Column(name = "member_id")
+    @Column(name = "member_id",unique = true)
     private String email;
     @Column(name = "member_pw")
     private String password;
-    @Column(name = "member_name")
+    @Column(name = "member_name", unique = true)
     private String name;
     @Column(name = "member_mail_certified")
     @ColumnDefault("0")
