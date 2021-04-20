@@ -1,6 +1,8 @@
 package com.portfolio.board.service;
 
+import com.portfolio.board.domain.Mail;
 import com.portfolio.board.domain.Member;
+import com.portfolio.board.repository.MailRepository;
 import com.portfolio.board.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,10 +13,12 @@ import javax.transaction.Transactional;
 public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepository;
+    private final MailRepository mailRepository;
 
     @Autowired
-    public MemberServiceImpl(MemberRepository memberRepository) {
+    public MemberServiceImpl(MemberRepository memberRepository, MailRepository mailRepository) {
         this.memberRepository = memberRepository;
+        this.mailRepository = mailRepository;
     }
 
 
@@ -39,4 +43,13 @@ public class MemberServiceImpl implements MemberService{
         }return 0; // login 실패
     }
 
+    @Override
+    @Transactional
+    public boolean mailCertification(String email, Integer number) {
+        if(mailRepository.findByMemberId(memberRepository.findByEmail(email)).getNumber().equals(number)){
+            memberRepository.certified(memberRepository.findById(memberRepository.findByEmail(email)));
+            return true;
+        }
+        return false;
+    }
 }

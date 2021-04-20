@@ -6,4 +6,5 @@ public interface MemberService {
 
     Long save(Member member);
     int login(Member member);
+    boolean mailCertification(String email, Integer number);
 }

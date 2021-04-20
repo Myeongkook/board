@@ -46,5 +46,10 @@ public class MemberRepoImpl implements MemberRepository{
         }
     }
 
+    @Override
+    public void certified(Member member) {
+        member.setMailCertified(true);
+    }
+
 
 }

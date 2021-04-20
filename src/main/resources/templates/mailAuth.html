@@ -5,6 +5,10 @@
     <title>Title</title>
 </head>
 <body>
-메일 인증 페이지
+<p th:text="'메일인증 페이지입니다. 안녕하세요 ' + ${nick}"><br>
+<form action="/auth" method="post">
+    <label>인증번호 : <input type="text" name="number"></label>
+    <input type="submit" value="인증하기">
+</form>
 </body>
 </html>

@@ -17,6 +17,6 @@ public class MailServiceTest {
 
     @Test
     public void SendTest(){
-        mailService.mailSend("myeongkuk01@naver.com");
+        mailService.mailSend("myeongkuk01@naver.com",123456);
     }
 }
