@@ -65,7 +65,6 @@ public class MemberController {
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
     public String Auth(HttpSession httpSession, Mail mail){
         if(memberService.mailCertification(String.valueOf(httpSession.getAttribute("mail")), mail.getNumber())){
-            System.out.println("성공하긴하니");
             return "home";
         }
         return "signup";
