@@ -57,7 +57,7 @@ public class MemberController {
     public String Signup(Member member){
         if(memberService.save(member) > 0L){
             mailService.mailSend(member.getEmail(),mailService.mailInfoSave(member));
-            return "redirect:/";
+            return "redirect:";
         }
         return "signup";
     }
@@ -65,8 +65,13 @@ public class MemberController {
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
     public String Auth(HttpSession httpSession, Mail mail){
         if(memberService.mailCertification(String.valueOf(httpSession.getAttribute("mail")), mail.getNumber())){
-            return "home";
+            return "redirect:/home";
         }
         return "signup";
+    }
+
+    @RequestMapping(value = "/home", method = RequestMethod.GET)
+    public String Home(){
+        return "home";
     }
 }
