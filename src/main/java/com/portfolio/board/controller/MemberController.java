@@ -45,6 +45,6 @@ public class MemberController {
     public String Signup(Member member){
         memberService.save(member);
         // mailService.sendCertificate
-        return "redirect:/index";
+        return "redirect:/";
     }
 }
