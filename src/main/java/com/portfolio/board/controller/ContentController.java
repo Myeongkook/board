@@ -34,6 +34,6 @@ public class ContentController {
         content.setWriter(writer.getName());
         System.out.println(writer.getName() + writer.getEmail());
         contentService.saveContent(content);
-        return "write";
+        return "home";
     }
 }
