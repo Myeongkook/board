@@ -16,12 +16,11 @@ public class Content {
     @Column(name = "content_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_no")
-    private Member member;
-
     @Column(name = "content_subject")
     private String subject;
+
+    @Column(name = "content_writer")
+    private String writer;
 
     @Lob
     @Column(name = "content_text")

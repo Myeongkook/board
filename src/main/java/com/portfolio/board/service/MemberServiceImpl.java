@@ -52,4 +52,15 @@ public class MemberServiceImpl implements MemberService{
         }
         return false;
     }
+
+    @Override
+    public Member findById(Long id) {
+        return memberRepository.findById(id);
+    }
+
+    @Override
+    public Long findByEmail(String email) {
+        return memberRepository.findByEmail(email);
+    }
+
 }

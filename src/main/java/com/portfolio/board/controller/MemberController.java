@@ -40,8 +40,7 @@ public class MemberController {
                 model.addAttribute("nick",httpSession.getAttribute("mail"));
                 return "mailAuth";
             }else {
-                httpSession.setAttribute("mail", member.getEmail());
-                model.addAttribute("nick",httpSession.getAttribute("mail"));
+                httpSession.setAttribute("member", memberService.findById(memberService.findByEmail(member.getEmail())));
                 return "home";
             }
         }
