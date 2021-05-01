@@ -19,8 +19,9 @@ public class Content {
     @Column(name = "content_subject")
     private String subject;
 
-    @Column(name = "content_writer")
-    private String writer;
+    @ManyToOne
+    @JoinColumn(name = "member_no")
+    private Member member;
 
     @Lob
     @Column(name = "content_text")

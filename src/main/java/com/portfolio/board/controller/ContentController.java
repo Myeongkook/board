@@ -31,8 +31,7 @@ public class ContentController {
     public String write(Content content, HttpSession httpSession){
         Object member = httpSession.getAttribute("member");
         Member writer = (Member) member;
-        content.setWriter(writer.getName());
-        System.out.println(writer.getName() + writer.getEmail());
+        content.setMember(writer);
         contentService.saveContent(content);
         return "home";
     }
