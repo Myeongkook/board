@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class ContentServiceImpl implements ContentService{
@@ -21,5 +22,11 @@ public class ContentServiceImpl implements ContentService{
     @Transactional
     public void saveContent(Content content) {
         contentRepository.save(content);
+    }
+
+    @Override
+    @Transactional
+    public List<Content> viewAllContent() {
+        return contentRepository.viewAllContent();
     }
 }

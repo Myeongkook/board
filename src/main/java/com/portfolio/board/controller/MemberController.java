@@ -1,7 +1,9 @@
 package com.portfolio.board.controller;
 
+import com.portfolio.board.domain.Content;
 import com.portfolio.board.domain.Mail;
 import com.portfolio.board.domain.Member;
+import com.portfolio.board.service.ContentService;
 import com.portfolio.board.service.MailService;
 import com.portfolio.board.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 @Controller
@@ -18,11 +21,13 @@ public class MemberController {
 
     private final MemberService memberService;
     private final MailService mailService;
+    private final ContentService contentService;
 
     @Autowired
-    public MemberController(MemberService memberService, MailService mailService) {
+    public MemberController(MemberService memberService, MailService mailService, ContentService contentService) {
         this.memberService = memberService;
         this.mailService = mailService;
+        this.contentService = contentService;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -41,7 +46,7 @@ public class MemberController {
                 return "mailAuth";
             }else {
                 httpSession.setAttribute("member", memberService.findById(memberService.findByEmail(member.getEmail())));
-                return "home";
+                return "redirect:/home";
             }
         }
         return "index";
@@ -70,7 +75,9 @@ public class MemberController {
     }
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public String Home(){
+    public String Home(Model model){
+        List<Content> list = contentService.viewAllContent();
+        model.addAttribute("list", list);
         return "home";
     }
 }

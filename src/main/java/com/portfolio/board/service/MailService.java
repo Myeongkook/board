@@ -5,6 +5,7 @@ import com.portfolio.board.repository.MailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -21,10 +22,11 @@ public class MailService {
         this.mailRepository = mailRepository;
     }
 
+    @Async
     public void mailSend(String email, Integer number){
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
-        message.setFrom("myeongkuk0406@gmail.com");
+        message.setFrom("no-reply@myeongkook.com");
         message.setSubject("Email Certification");
         message.setText("인증코드 : " + number);
         mailSender.send(message);

@@ -7,5 +7,21 @@
 <body>
 Home Page
 <a href="/write">글쓰기</a>
+<br>
+<table>
+    <thead>
+    <tr>
+        <th>제목</th>
+        <th>글쓴이</th>
+        <th>작성일</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="content, i : ${list}">
+        <td th:text="${content.subject}"></td>
+        <td th:text="${content.getMember().getName()}"></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
