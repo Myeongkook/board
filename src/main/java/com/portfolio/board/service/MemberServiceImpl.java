@@ -4,6 +4,7 @@ import com.portfolio.board.domain.Mail;
 import com.portfolio.board.domain.Member;
 import com.portfolio.board.repository.MailRepository;
 import com.portfolio.board.repository.MemberRepository;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +37,7 @@ public class MemberServiceImpl implements MemberService{
             return 0; // login 실패
         }
         Member byId = memberRepository.findById(byEmail);
-        if(byId.getPassword().equals(member.getPassword())){
+        if(BCrypt.checkpw(member.getPassword(),byId.getPassword())){
             if(memberRepository.checkByCertified(memberRepository.findById(memberRepository.findByEmail(member.getEmail())))){
                 return 2; // login 성공
             }return 1; // login 실패 - 메인인증 필요
@@ -61,6 +62,11 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public Long findByEmail(String email) {
         return memberRepository.findByEmail(email);
+    }
+
+    @Override
+    public boolean existEmail(String email) {
+        return memberRepository.findByEmail(email) > 0L;
     }
 
 }

@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.portfolio'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+// sourceCompatibility = '11'
 
 configurations {
 	compileOnly {
@@ -29,6 +29,7 @@ dependencies {
 	compile("org.springframework.boot:spring-boot-starter-mail")
 	runtimeOnly 'com.h2database:h2'
 	annotationProcessor 'org.projectlombok:lombok'
+	implementation group: 'org.mindrot', name: 'jbcrypt', version: '0.3m'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 }

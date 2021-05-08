@@ -9,4 +9,5 @@ public interface MemberService {
     boolean mailCertification(String email, Integer number);
     Member findById(Long id);
     Long findByEmail(String email);
+    boolean existEmail(String email);
 }

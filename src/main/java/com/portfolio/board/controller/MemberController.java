@@ -6,9 +6,13 @@ import com.portfolio.board.domain.Member;
 import com.portfolio.board.service.ContentService;
 import com.portfolio.board.service.MailService;
 import com.portfolio.board.service.MemberService;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -62,6 +66,7 @@ public class MemberController {
 
     @RequestMapping(value = "/signup",method = RequestMethod.POST)
     public String Signup(Member member){
+        member.setPassword(BCrypt.hashpw(member.getPassword(),BCrypt.gensalt()));
         if(memberService.save(member) > 0L){
             mailService.mailSend(member.getEmail(),mailService.mailInfoSave(member));
             return "redirect:";
@@ -77,7 +82,7 @@ public class MemberController {
             httpSession.setAttribute("member", memberService.findById(memberService.findByEmail(castingEmail)));
             return "redirect:/home";
         }
-        return "signup";
+        return "index";
     }
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
@@ -94,5 +99,10 @@ public class MemberController {
     public String Logout(HttpSession httpSession){
         httpSession.invalidate();
         return "redirect:";
+    }
+
+    @GetMapping("/mail-check/{email}")
+    public ResponseEntity<Boolean> checkEmailDuplicate(@PathVariable String email){
+        return ResponseEntity.ok(memberService.existEmail(email));
     }
 }
