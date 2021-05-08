@@ -7,6 +7,7 @@
 <body>
 Home Page
 <a href="/write">글쓰기</a>
+<a href="/logout">로그아웃</a>
 <br>
 <table>
     <thead>
@@ -20,6 +21,7 @@ Home Page
     <tr th:each="content, i : ${list}">
         <td th:text="${content.subject}"></td>
         <td th:text="${content.getMember().getName()}"></td>
+        <td th:text="${content.getCreateTime()}"></td>
     </tr>
     </tbody>
 </table>

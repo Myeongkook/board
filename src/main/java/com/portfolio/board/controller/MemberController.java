@@ -31,7 +31,10 @@ public class MemberController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String Login(){
+    public String Login(HttpSession httpSession){
+        if (httpSession.getAttribute("member") != null){
+            return "redirect:/home";
+        }
         return "index";
     }
 
@@ -69,15 +72,27 @@ public class MemberController {
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
     public String Auth(HttpSession httpSession, Mail mail){
         if(memberService.mailCertification(String.valueOf(httpSession.getAttribute("mail")), mail.getNumber())){
+            Object sessionEmail = httpSession.getAttribute("mail");
+            String castingEmail = (String) sessionEmail;
+            httpSession.setAttribute("member", memberService.findById(memberService.findByEmail(castingEmail)));
             return "redirect:/home";
         }
         return "signup";
     }
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public String Home(Model model){
+    public String Home(Model model, HttpSession httpSession){
+        if(httpSession.getAttribute("member") == null){
+            return "redirect:";
+        }
         List<Content> list = contentService.viewAllContent();
         model.addAttribute("list", list);
         return "home";
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String Logout(HttpSession httpSession){
+        httpSession.invalidate();
+        return "redirect:";
     }
 }

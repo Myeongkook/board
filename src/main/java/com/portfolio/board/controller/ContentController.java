@@ -33,6 +33,6 @@ public class ContentController {
         Member writer = (Member) member;
         content.setMember(writer);
         contentService.saveContent(content);
-        return "home";
+        return "redirect:/home";
     }
 }

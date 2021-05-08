@@ -20,7 +20,7 @@ public class Content {
     private String subject;
 
     @ManyToOne
-    @JoinColumn(name = "member_no")
+    @JoinColumn(name = "member_no", nullable = false)
     private Member member;
 
     @Lob
