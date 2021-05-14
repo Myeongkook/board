@@ -51,5 +51,15 @@ public class MemberRepoImpl implements MemberRepository{
         member.setMailCertified(true);
     }
 
-
+    @Override
+    public Long findByName(String name) {
+        try {
+            return em.createQuery("select m from Member m where m.name = :name", Member.class)
+                    .setParameter("name", name)
+                    .getSingleResult()
+                    .getId();
+        }catch (NoResultException e){
+            return 0L;
+        }
+    }
 }

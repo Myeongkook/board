@@ -105,4 +105,14 @@ public class MemberController {
     public ResponseEntity<Boolean> checkEmailDuplicate(@PathVariable String email){
         return ResponseEntity.ok(memberService.existEmail(email));
     }
+
+    @GetMapping("/name-check/{name}")
+    public ResponseEntity<Boolean> checkNameDuplicate(@PathVariable String name){
+        return ResponseEntity.ok(memberService.existName(name));
+    }
+
+    @GetMapping(value = "/test")
+    public String test(){
+        return "test";
+    }
 }

@@ -8,4 +8,5 @@ public interface MemberRepository {
     Long findByEmail(String email);
     boolean checkByCertified(Member member);
     void certified(Member member);
+    Long findByName(String name);
 }

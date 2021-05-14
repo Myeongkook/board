@@ -13,6 +13,7 @@ import javax.transaction.Transactional;
 @Service
 public class MemberServiceImpl implements MemberService{
 
+
     private final MemberRepository memberRepository;
     private final MailRepository mailRepository;
 
@@ -67,6 +68,10 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public boolean existEmail(String email) {
         return memberRepository.findByEmail(email) > 0L;
+    }
+    @Override
+    public boolean existName(String name) {
+        return memberRepository.findByName(name) > 0L;
     }
 
 }

@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
     <title>JPA Board</title>
     <!-- 부트스트랩 -->
     <style>
@@ -15,40 +14,27 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script>
         $(document).ready(function(){ $('.input').focus(function(){ $(this).parent().find(".label-txt").addClass('label-active'); }); $(".input").focusout(function(){ if ($(this).val() === '') { $(this).parent().find(".label-txt").removeClass('label-active'); } }); });
-        function test(a){
-            $.ajax({
-                url: "mail-check/" +a,
-                type: "GET",
-                datatype: "json",
-                success : function (data){
-                    alert(data)
-                },
-                error : function(){
-                    alert("에러")
-                }
-            });
-        }
     </script>
 </head>
 <body>
 <form action="signup" method="post">
     <label>
         <p class="label-txt">ENTER YOUR EMAIL</p>
-        <input type="text" class="input" name="email" autocomplete="off">
+        <input type="text" class="input" name="email" id="email" autocomplete="off">
         <div class="line-box">
             <div class="line"></div>
         </div>
     </label>
     <label>
         <p class="label-txt">ENTER YOUR NAME</p>
-        <input type="text" class="input" name="name" autocomplete="off">
+        <input type="text" class="input" id="name" name="name" autocomplete="off">
         <div class="line-box">
             <div class="line"></div>
         </div>
     </label>
     <label>
         <p class="label-txt">ENTER YOUR PASSWORD</p>
-        <input type="password" class="input" name="password">
+        <input type="password" class="input" name="password" id="password">
         <div class="line-box">
             <div class="line"></div>
         </div>
@@ -56,4 +42,60 @@
     <button type="submit">submit</button>
 </form>
 </body>
+<script>
+    let mail_flag = 1;
+    let name_flag = 1;
+    $("#name").focus(function (){
+        if(mail_flag === 1){
+            mailCheck($("#email").val())
+            mail_flag = 0;
+        }
+    })
+
+    $("#password").focus(function (){
+        if(name_flag === 1){
+            nameCheck($("#name").val())
+            name_flag = 0;
+        }
+    })
+
+    $("#email").keyup(function (){
+        mail_flag = 1;
+    })
+
+    $("#name").keyup(function (){
+        name_flag = 1;
+    })
+    function mailCheck(a){
+        $.ajax({
+            url: "mail-check/" + a,
+            type: "GET",
+            datatype: "json",
+            success : function (data){
+                if(data === true){
+                    console.log("중복된 이메일")
+                }
+                if(data === false){
+                    console.log("사용가능한 이메일")
+                }
+            }
+        })
+    }
+
+    function nameCheck(a){
+        $.ajax({
+            url: "name-check/" + a,
+            type: "GET",
+            datatype: "json",
+            success : function (data){
+                if(data === true){
+                    console.log("중복된 닉네임")
+                }
+                if(data === false){
+                    console.log("사용가능한 닉네임")
+                }
+            }
+        })
+    }
+</script>
 </html>

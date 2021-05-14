@@ -10,4 +10,5 @@ public interface MemberService {
     Member findById(Long id);
     Long findByEmail(String email);
     boolean existEmail(String email);
+    boolean existName(String name);
 }
