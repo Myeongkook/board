@@ -7,4 +7,6 @@ import java.util.List;
 public interface ContentService {
     void saveContent(Content content);
     List<Content> viewAllContent();
+    Content readContent(Long id);
+    Boolean deleteContent(Long id);
 }

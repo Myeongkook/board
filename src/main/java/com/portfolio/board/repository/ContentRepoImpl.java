@@ -24,4 +24,19 @@ public class ContentRepoImpl implements ContentRepository{
     public List<Content> viewAllContent() {
         return em.createQuery("select c from Content c", Content.class).getResultList();
     }
+
+    @Override
+    public Content findById(Long id) {
+        return em.find(Content.class, id);
+    }
+
+    @Override
+    public boolean delete(Long id) {
+        try{
+            em.remove(em.find(Content.class, id));
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
 }

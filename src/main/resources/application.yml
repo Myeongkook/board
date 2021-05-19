@@ -5,6 +5,7 @@ spring:
     password:
     driver-class-name: org.h2.Driver
 
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -15,8 +16,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ID
-    password: Password
+    username: myeongkuk0406@gmail.com
+    password: Playnic!124
     properties:
       mail:
         smtp:

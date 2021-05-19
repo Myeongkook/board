@@ -29,4 +29,15 @@ public class ContentServiceImpl implements ContentService{
     public List<Content> viewAllContent() {
         return contentRepository.viewAllContent();
     }
+
+    @Override
+    public Content readContent(Long id) {
+        return contentRepository.findById(id);
+    }
+
+    @Override
+    @Transactional
+    public Boolean deleteContent(Long id) {
+        return contentRepository.delete(id);
+    }
 }

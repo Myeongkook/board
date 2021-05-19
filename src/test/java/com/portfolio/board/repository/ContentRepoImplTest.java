@@ -28,4 +28,12 @@ public class ContentRepoImplTest {
         contentRepository.save(content);
     }
 
+    @Test
+    @Transactional
+    @Rollback(value = false)
+    public void deleteTest(){
+        Content content = new Content();
+        contentRepository.delete(16L);
+    }
+
 }
