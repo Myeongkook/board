@@ -31,7 +31,9 @@ public class ContentServiceImpl implements ContentService{
     }
 
     @Override
+    @Transactional
     public Content readContent(Long id) {
+        contentRepository.countHit(id);
         return contentRepository.findById(id);
     }
 

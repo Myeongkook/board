@@ -30,6 +30,9 @@ public class Content {
     @Column(name = "content_deleted")
     private boolean deleted;
 
+    @Column(name = "content_hit",columnDefinition = "integer default 0")
+    private int hitCount;
+
     @CreationTimestamp
     @Column(name = "content_datetime")
     private LocalDateTime createTime;

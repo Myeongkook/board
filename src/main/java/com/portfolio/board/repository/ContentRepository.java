@@ -9,4 +9,5 @@ public interface ContentRepository {
     List<Content> viewAllContent();
     Content findById(Long id);
     boolean delete(Long id);
+    void countHit(Long id);
 }

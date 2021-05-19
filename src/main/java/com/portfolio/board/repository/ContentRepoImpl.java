@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -38,5 +37,12 @@ public class ContentRepoImpl implements ContentRepository{
         }catch (Exception e){
             return false;
         }
+    }
+    @Override
+    public void countHit(Long id) {
+        Content content = em.find(Content.class, id);
+        int hitCount = content.getHitCount();
+        hitCount += 1;
+        content.setHitCount(hitCount);
     }
 }

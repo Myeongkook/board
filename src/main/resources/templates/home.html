@@ -15,6 +15,7 @@ Home Page
     <tr>
         <th>제목</th>
         <th>글쓴이</th>
+        <th>조회수</th>
         <th>작성일</th>
     </tr>
     </thead>
@@ -23,6 +24,7 @@ Home Page
         <td class="title">
             <a href="/read/" th:attrappend="href=${content.getId()}" th:text="${content.subject}"></a></td>
         <td th:text="${content.getMember().getName()}"></td>
+        <td th:text="${content.getHitCount()}"></td>
         <td th:text="${content.getCreateTime()}"></td>
     </tr>
     </tbody>

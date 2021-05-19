@@ -1,6 +1,7 @@
 package com.portfolio.board.repository;
 
 import com.portfolio.board.domain.Content;
+import com.portfolio.board.domain.Member;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,6 @@ public class ContentRepoImplTest {
         Content content = new Content();
         contentRepository.delete(16L);
     }
+
 
 }
