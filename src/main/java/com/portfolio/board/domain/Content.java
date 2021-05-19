@@ -16,7 +16,7 @@ public class Content {
     @Column(name = "content_id")
     private Long id;
 
-    @Column(name = "content_subject")
+    @Column(name = "content_subject", nullable = false)
     private String subject;
 
     @ManyToOne
@@ -24,7 +24,7 @@ public class Content {
     private Member member;
 
     @Lob
-    @Column(name = "content_text")
+    @Column(name = "content_text", nullable = false)
     private String text;
 
     @Column(name = "content_deleted")
