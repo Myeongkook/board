@@ -24,7 +24,7 @@ public class Content {
     private Member member;
 
     @Lob
-    @Column(name = "content_text", nullable = false)
+    @Column(name = "content_text")
     private String text;
 
     @Column(name = "content_deleted")
