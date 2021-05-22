@@ -22,5 +22,19 @@
 <form action="/delete/" method="post" th:attrappend="action=${content_id}">
   <button type="submit">삭제</button>
 </form>
+<form action="/comment/" method="post" th:attrappend="action=${content_id}">
+  <label>Comments
+    <textarea style="resize: none" name="text"></textarea>
+  </label><br>
+  <button type="submit">확인</button>
+</form><br>
+<table>
+  <tbody>
+    <tr th:each="comment : ${comments}">
+      <td th:text="${comment.getText()}"></td>
+      <td th:text="${comment.getMember().getName()}"></td>
+    </tr>
+  </tbody>
+</table>
 </body>
 </html>

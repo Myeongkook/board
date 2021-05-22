@@ -1,5 +1,6 @@
 package com.portfolio.board.service;
 
+import com.portfolio.board.domain.Comment;
 import com.portfolio.board.domain.Content;
 import com.portfolio.board.repository.ContentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +42,16 @@ public class ContentServiceImpl implements ContentService{
     @Transactional
     public Boolean deleteContent(Long id) {
         return contentRepository.delete(id);
+    }
+
+    @Override
+    @Transactional
+    public void saveComment(Comment comment) {
+        contentRepository.saveComment(comment);
+    }
+
+    @Override
+    public List<Comment> ViewAllComment(Long id) {
+        return contentRepository.viewAllComment(id);
     }
 }

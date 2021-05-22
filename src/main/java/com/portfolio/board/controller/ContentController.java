@@ -1,5 +1,6 @@
 package com.portfolio.board.controller;
 
+import com.portfolio.board.domain.Comment;
 import com.portfolio.board.domain.Content;
 import com.portfolio.board.domain.Member;
 import com.portfolio.board.repository.MemberRepository;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class ContentController {
@@ -41,8 +43,10 @@ public class ContentController {
     @RequestMapping(value = "read/{content_id}", method = RequestMethod.GET)
     public ModelAndView read(@PathVariable Long content_id){
         Content content = contentService.readContent(content_id);
+        List<Comment> comments = contentService.ViewAllComment(content_id);
         ModelAndView m = new ModelAndView();
         m.addObject("content", content);
+        m.addObject("comments",comments);
         m.setViewName("contents");
         return m;
     }
@@ -51,5 +55,13 @@ public class ContentController {
     public String delete(@PathVariable Long content_id){
         contentService.deleteContent(content_id);
         return "redirect:/home";
+    }
+
+    @RequestMapping(value = "/comment/{content_id}", method = RequestMethod.POST)
+    public String writeComment(@PathVariable Long content_id, Comment comment, HttpSession httpSession){
+        comment.setContent(contentService.readContent(content_id));
+        comment.setMember((Member)httpSession.getAttribute("member"));
+        contentService.saveComment(comment);
+        return "redirect:/read/" + content_id;
     }
 }

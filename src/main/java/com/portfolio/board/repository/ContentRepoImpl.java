@@ -1,5 +1,6 @@
 package com.portfolio.board.repository;
 
+import com.portfolio.board.domain.Comment;
 import com.portfolio.board.domain.Content;
 import org.springframework.stereotype.Repository;
 
@@ -44,5 +45,17 @@ public class ContentRepoImpl implements ContentRepository{
         int hitCount = content.getHitCount();
         hitCount += 1;
         content.setHitCount(hitCount);
+    }
+
+    @Override
+    public void saveComment(Comment comment) {
+        em.persist(comment);
+    }
+
+    @Override
+    public List<Comment> viewAllComment(Long id) {
+        return em.createQuery("select c from Comment c where c.content = :content",Comment.class)
+                .setParameter("content",em.find(Content.class,id))
+                .getResultList();
     }
 }
