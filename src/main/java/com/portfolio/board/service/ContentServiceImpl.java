@@ -2,6 +2,7 @@ package com.portfolio.board.service;
 
 import com.portfolio.board.domain.Comment;
 import com.portfolio.board.domain.Content;
+import com.portfolio.board.domain.ContentStatus;
 import com.portfolio.board.repository.ContentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,5 +54,16 @@ public class ContentServiceImpl implements ContentService{
     @Override
     public List<Comment> ViewAllComment(Long id) {
         return contentRepository.viewAllComment(id);
+    }
+
+    @Override
+    @Transactional
+    public void CountingGood(ContentStatus contentStatus) {
+        contentRepository.saveGoodCount(contentStatus);
+    }
+
+    @Override
+    public Long ViewContentGood(Long id) {
+        return contentRepository.viewGoodCount(id);
     }
 }

@@ -1,24 +1,25 @@
 package com.portfolio.board.repository;
 
 import com.portfolio.board.domain.Content;
+import com.portfolio.board.domain.ContentStatus;
 import com.portfolio.board.domain.Member;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
-public class ContentRepoImplTest {
+class ContentRepoImplTest {
 
     @Autowired
     ContentRepository contentRepository;
+    @Autowired
+    MemberRepository memberRepository;
 
     @Test
     @Transactional
@@ -35,6 +36,19 @@ public class ContentRepoImplTest {
     public void deleteTest(){
         Content content = new Content();
         contentRepository.delete(16L);
+    }
+    @Test
+    @Transactional
+    @Rollback(value = false)
+    public void test(){
+        ContentStatus contentStatus = new ContentStatus();
+        Content byId = contentRepository.findById(4L);
+        Member member = memberRepository.findById(2L);
+        contentStatus.setContent(byId);
+        contentStatus.setMember(member);
+        contentStatus.setDeleted(false);
+        contentRepository.saveGoodCount(contentStatus);
+        Assertions.assertThat(contentRepository.viewGoodCount(4L)).isEqualTo(6);
     }
 
 

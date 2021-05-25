@@ -2,6 +2,7 @@ package com.portfolio.board.repository;
 
 import com.portfolio.board.domain.Comment;
 import com.portfolio.board.domain.Content;
+import com.portfolio.board.domain.ContentStatus;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -57,5 +58,18 @@ public class ContentRepoImpl implements ContentRepository{
         return em.createQuery("select c from Comment c where c.content = :content",Comment.class)
                 .setParameter("content",em.find(Content.class,id))
                 .getResultList();
+    }
+
+    @Override
+    public Long viewGoodCount(Long id) {
+        return em.createQuery("select count(c) from ContentStatus c where c.content = :id", Long.class)
+                .setParameter("id", em.find(Content.class,id))
+                .getSingleResult();
+    }
+
+    @Override
+    public Long saveGoodCount(ContentStatus contentStatus) {
+        em.persist(contentStatus);
+        return contentStatus.getId();
     }
 }

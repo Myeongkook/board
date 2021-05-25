@@ -36,4 +36,11 @@ public class MemberRepoImplTest {
     public void findTest(){
         Long byEmail = memberRepository.findByEmail("myeongkuk@naver.com");
     }
+
+    @Test
+    @Transactional
+    @Rollback(value = false)
+    public void findTest2(){
+        Member byId = memberRepository.findById(2L);
+    }
 }

@@ -12,6 +12,7 @@
     <th>제목</th><td th:text="${content.getSubject()}"></td>
     <th>글쓴이</th><td th:text="${content.getMember().getName()}"></td>
     <th>내용</th><td th:text="${content.getText()}"></td>
+    <th>좋아요</th><td th:text="${good}"></td>
   </tr>
   </thead>
   <tbody>
@@ -19,6 +20,7 @@
   </tbody>
   <a href="/home">뒤로가기</a>
 </table>
+<a href="/read/good/" th:attrappend="href=${content_id}">좋아요</a>
 <form action="/delete/" method="post" th:attrappend="action=${content_id}">
   <button type="submit">삭제</button>
 </form>

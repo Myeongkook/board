@@ -2,6 +2,7 @@ package com.portfolio.board.controller;
 
 import com.portfolio.board.domain.Comment;
 import com.portfolio.board.domain.Content;
+import com.portfolio.board.domain.ContentStatus;
 import com.portfolio.board.domain.Member;
 import com.portfolio.board.repository.MemberRepository;
 import com.portfolio.board.service.ContentService;
@@ -45,6 +46,8 @@ public class ContentController {
         Content content = contentService.readContent(content_id);
         List<Comment> comments = contentService.ViewAllComment(content_id);
         ModelAndView m = new ModelAndView();
+        Long goodCount = contentService.ViewContentGood(content_id);
+        m.addObject("good", goodCount);
         m.addObject("content", content);
         m.addObject("comments",comments);
         m.setViewName("contents");
@@ -62,6 +65,16 @@ public class ContentController {
         comment.setContent(contentService.readContent(content_id));
         comment.setMember((Member)httpSession.getAttribute("member"));
         contentService.saveComment(comment);
+        return "redirect:/read/" + content_id;
+    }
+
+    @RequestMapping(value = "read/good/{content_id}", method = RequestMethod.GET)
+    public String addGood(@PathVariable Long content_id, HttpSession httpSession){
+        ContentStatus c = new ContentStatus();
+        c.setContent(contentService.readContent(content_id));
+        c.setMember((Member) httpSession.getAttribute("member"));
+        c.setDeleted(false);
+        contentService.CountingGood(c);
         return "redirect:/read/" + content_id;
     }
 }
