@@ -91,4 +91,11 @@ public class ContentRepoImpl implements ContentRepository{
         }
         return 0L;
     }
+
+    @Override
+    public Long deleteComment(Long id) {
+        Comment comment = em.find(Comment.class, id);
+        em.remove(comment);
+        return comment.getContent().getId();
+    }
 }

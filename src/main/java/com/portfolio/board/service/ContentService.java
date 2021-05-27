@@ -15,4 +15,5 @@ public interface ContentService {
     List<Comment> ViewAllComment(Long id);
     void CountingGood(ContentStatus contentStatus);
     Long ViewContentGood(Long id);
+    Long findByCommentIdAndDeleteComment(Long id);
 }

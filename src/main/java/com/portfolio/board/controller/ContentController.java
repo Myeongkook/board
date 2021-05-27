@@ -34,15 +34,13 @@ public class ContentController {
 
     @RequestMapping(value = "/write", method = RequestMethod.POST)
     public String write(Content content, HttpSession httpSession){
-        Object member = httpSession.getAttribute("member");
-        Member writer = (Member) member;
-        content.setMember(writer);
+        content.setMember((Member) httpSession.getAttribute("member"));
         contentService.saveContent(content);
         return "redirect:/home";
     }
 
     @RequestMapping(value = "read/{content_id}", method = RequestMethod.GET)
-    public ModelAndView read(@PathVariable Long content_id){
+    public ModelAndView read(@PathVariable Long content_id, HttpSession httpSession){
         Content content = contentService.readContent(content_id);
         List<Comment> comments = contentService.ViewAllComment(content_id);
         ModelAndView m = new ModelAndView();
@@ -50,6 +48,7 @@ public class ContentController {
         m.addObject("good", goodCount);
         m.addObject("content", content);
         m.addObject("comments",comments);
+        m.addObject("member",(Member)httpSession.getAttribute("member"));
         m.setViewName("contents");
         return m;
     }
@@ -76,5 +75,10 @@ public class ContentController {
         c.setDeleted(false);
         contentService.CountingGood(c);
         return "redirect:/read/" + content_id;
+    }
+
+    @RequestMapping(value = "comment/delete/{comment_id}",method = RequestMethod.POST)
+    public String deleteComment(@PathVariable Long comment_id){
+        return "redirect:/read/" + contentService.findByCommentIdAndDeleteComment(comment_id);
     }
 }

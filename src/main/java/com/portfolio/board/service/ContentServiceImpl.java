@@ -66,4 +66,10 @@ public class ContentServiceImpl implements ContentService{
     public Long ViewContentGood(Long id) {
         return contentRepository.viewGoodCount(id);
     }
+
+    @Override
+    @Transactional
+    public Long findByCommentIdAndDeleteComment(Long id) {
+        return contentRepository.deleteComment(id);
+    }
 }
