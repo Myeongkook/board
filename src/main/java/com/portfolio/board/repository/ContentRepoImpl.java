@@ -81,7 +81,14 @@ public class ContentRepoImpl implements ContentRepository{
 
     @Override
     public Long saveGoodCount(ContentStatus contentStatus) {
-        em.persist(contentStatus);
-        return contentStatus.getId();
+        Long result = em.createQuery("select count(c) from ContentStatus c where c.content=:content and c.member = :member", Long.class)
+                .setParameter("content",contentStatus.getContent())
+                .setParameter("member",contentStatus.getMember())
+                .getSingleResult();
+        if (result == 0) {
+            em.persist(contentStatus);
+            return contentStatus.getId();
+        }
+        return 0L;
     }
 }
