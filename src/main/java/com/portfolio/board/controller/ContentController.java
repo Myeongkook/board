@@ -63,6 +63,9 @@ public class ContentController {
     public String writeComment(@PathVariable Long content_id, Comment comment, HttpSession httpSession){
         comment.setContent(contentService.readContent(content_id));
         comment.setMember((Member)httpSession.getAttribute("member"));
+        if (comment.getText().length() < 1){
+            return "error";
+        }
         contentService.saveComment(comment);
         return "redirect:/read/" + content_id;
     }

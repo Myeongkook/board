@@ -21,7 +21,7 @@
   <a href="/home">뒤로가기</a>
 </table>
 <a href="/read/good/" th:attrappend="href=${content_id}">좋아요</a>
-<form action="/delete/" method="post" th:attrappend="action=${content_id}">
+<form action="/delete/" method="post" th:attrappend="action=${content_id}" th:if="${content.getMember().getName()} == ${member.getName()}">
   <button type="submit">삭제</button>
 </form>
 <form action="/comment/" method="post" th:attrappend="action=${content_id}">

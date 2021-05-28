@@ -21,6 +21,6 @@ public class Comment {
     @JoinColumn(name = "member_no", nullable = false)
     private Member member;
 
-    @Column(name = "comment_text")
+    @Column(name = "comment_text",nullable = false)
     private String text;
 }
