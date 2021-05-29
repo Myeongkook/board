@@ -49,11 +49,17 @@ public class ContentController {
         m.addObject("member",(Member)httpSession.getAttribute("member"));
         @SuppressWarnings("unchecked")
         List<Long> pageList = (ArrayList<Long>)httpSession.getAttribute("pageList");
+        boolean existPage = false;
         for (Long aLong : pageList) {
-            if(!aLong.equals(content_id)){
-                pageList.add(content_id);
-                contentService.CountingHit(content_id);
+            if (aLong.equals(content_id)) {
+                existPage = true;
+                break;
             }
+        }
+        if (!existPage){
+            pageList.add(content_id);
+            httpSession.setAttribute("pageList", pageList);
+            contentService.CountingHit(content_id);
         }
         m.setViewName("contents");
         return m;
