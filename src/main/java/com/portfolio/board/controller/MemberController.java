@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -46,13 +47,17 @@ public class MemberController {
     public String Login(Member member, HttpSession httpSession, Model model){
         if(member != null){
             if(memberService.login(member) == 0){
+                model.addAttribute("result",false);
                 return "index";
             }else if(memberService.login(member) == 1){
                 httpSession.setAttribute("mail", member.getEmail());
                 model.addAttribute("nick",httpSession.getAttribute("mail"));
                 return "mailAuth";
             }else {
+                List <Long> pageList = new ArrayList<>();
+                pageList.add(0L);
                 httpSession.setAttribute("member", memberService.findById(memberService.findByEmail(member.getEmail())));
+                httpSession.setAttribute("pageList",pageList);
                 return "redirect:/home";
             }
         }
@@ -75,14 +80,14 @@ public class MemberController {
     }
 
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
-    public String Auth(HttpSession httpSession, Mail mail){
+    public String Auth(HttpSession httpSession, Mail mail, Model model){
         if(memberService.mailCertification(String.valueOf(httpSession.getAttribute("mail")), mail.getNumber())){
-            Object sessionEmail = httpSession.getAttribute("mail");
-            String castingEmail = (String) sessionEmail;
-            httpSession.setAttribute("member", memberService.findById(memberService.findByEmail(castingEmail)));
+            httpSession.setAttribute("member", memberService.findById(memberService.findByEmail((String)httpSession.getAttribute("mail"))));
             return "redirect:/home";
         }
-        return "index";
+        model.addAttribute("nick",httpSession.getAttribute("mail"));
+        model.addAttribute("result",false);
+        return "mailAuth";
     }
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)

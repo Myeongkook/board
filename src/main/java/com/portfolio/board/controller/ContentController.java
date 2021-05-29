@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -41,14 +42,19 @@ public class ContentController {
 
     @RequestMapping(value = "read/{content_id}", method = RequestMethod.GET)
     public ModelAndView read(@PathVariable Long content_id, HttpSession httpSession){
-        Content content = contentService.readContent(content_id);
-        List<Comment> comments = contentService.ViewAllComment(content_id);
         ModelAndView m = new ModelAndView();
-        Long goodCount = contentService.ViewContentGood(content_id);
-        m.addObject("good", goodCount);
-        m.addObject("content", content);
-        m.addObject("comments",comments);
+        m.addObject("good", contentService.ViewContentGood(content_id));
+        m.addObject("content", contentService.readContent(content_id));
+        m.addObject("comments",contentService.ViewAllComment(content_id));
         m.addObject("member",(Member)httpSession.getAttribute("member"));
+        @SuppressWarnings("unchecked")
+        List<Long> pageList = (ArrayList<Long>)httpSession.getAttribute("pageList");
+        for (Long aLong : pageList) {
+            if(!aLong.equals(content_id)){
+                pageList.add(content_id);
+                contentService.CountingHit(content_id);
+            }
+        }
         m.setViewName("contents");
         return m;
     }

@@ -3,12 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            if($('#auth_result').val() === "false"){
+                alert("인증코드가 올바르지 않습니다.")
+            }
+        });
+    </script>
 </head>
 <body>
 <p th:text="'메일인증 페이지입니다. 안녕하세요 ' + ${nick}"><br>
 <form action="/auth" method="post">
     <label>인증번호 : <input type="text" name="number"></label>
     <input type="submit" value="인증하기">
+    <input type="text" hidden="hidden" th:value="${result}" id="auth_result">
 </form>
 </body>
 </html>

@@ -35,9 +35,9 @@ public class ContentServiceImpl implements ContentService{
     @Override
     @Transactional
     public Content readContent(Long id) {
-        contentRepository.countHit(id);
         return contentRepository.findById(id);
     }
+
 
     @Override
     @Transactional
@@ -71,5 +71,11 @@ public class ContentServiceImpl implements ContentService{
     @Transactional
     public Long findByCommentIdAndDeleteComment(Long id) {
         return contentRepository.deleteComment(id);
+    }
+
+    @Override
+    @Transactional
+    public void CountingHit(Long id) {
+        contentRepository.countHit(id);
     }
 }

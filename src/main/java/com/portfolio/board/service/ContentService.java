@@ -16,4 +16,5 @@ public interface ContentService {
     void CountingGood(ContentStatus contentStatus);
     Long ViewContentGood(Long id);
     Long findByCommentIdAndDeleteComment(Long id);
+    void CountingHit(Long id);
 }
