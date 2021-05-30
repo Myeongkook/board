@@ -23,7 +23,7 @@ public class ContentRepoImpl implements ContentRepository{
 
     @Override
     public List<Content> viewAllContent() {
-        return em.createQuery("select c from Content c", Content.class).getResultList();
+        return em.createQuery("select c from Content c where c.deleted = false ", Content.class).getResultList();
     }
 
     @Override
@@ -32,25 +32,8 @@ public class ContentRepoImpl implements ContentRepository{
     }
 
     @Override
-    public boolean delete(Long id) {
-        try{
-            List<Comment> commentList = em.createQuery("select c from Comment c where c.content =:id", Comment.class)
-                    .setParameter("id", em.find(Content.class, id))
-                    .getResultList();
-            List<ContentStatus> contentStatusList = em.createQuery("select s from ContentStatus s where s.content = :id",ContentStatus.class)
-                    .setParameter("id",em.find(Content.class,id))
-                    .getResultList();
-            for (Comment comment : commentList) {
-                em.remove(comment);
-            }
-            for (ContentStatus contentStatus : contentStatusList) {
-                em.remove(contentStatus);
-            }
-            em.remove(em.find(Content.class, id));
-            return true;
-        }catch (Exception e){
-            return false;
-        }
+    public void delete(Long id) {
+            em.find(Content.class, id).setDeleted(true);
     }
     @Override
     public void countHit(Long id) {
@@ -67,7 +50,7 @@ public class ContentRepoImpl implements ContentRepository{
 
     @Override
     public List<Comment> viewAllComment(Long id) {
-        return em.createQuery("select c from Comment c where c.content = :content",Comment.class)
+        return em.createQuery("select c from Comment c where c.content = :content and c.deleted = false",Comment.class)
                 .setParameter("content",em.find(Content.class,id))
                 .getResultList();
     }

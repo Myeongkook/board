@@ -50,12 +50,12 @@ public class ContentController {
         @SuppressWarnings("unchecked")
         List<Long> pageList = (ArrayList<Long>)httpSession.getAttribute("pageList");
         boolean existPage = false;
-        for (Long aLong : pageList) {
-            if (aLong.equals(content_id)) {
-                existPage = true;
-                break;
+            for (Long aLong : pageList) {
+                if (aLong.equals(content_id)) {
+                    existPage = true;
+                    break;
+                }
             }
-        }
         if (!existPage){
             pageList.add(content_id);
             httpSession.setAttribute("pageList", pageList);

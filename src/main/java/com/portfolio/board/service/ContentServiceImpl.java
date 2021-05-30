@@ -41,8 +41,8 @@ public class ContentServiceImpl implements ContentService{
 
     @Override
     @Transactional
-    public Boolean deleteContent(Long id) {
-        return contentRepository.delete(id);
+    public void deleteContent(Long id) {
+        contentRepository.delete(id);
     }
 
     @Override

@@ -55,7 +55,6 @@ public class MemberController {
                 return "mailAuth";
             }else {
                 List <Long> pageList = new ArrayList<>();
-                pageList.add(0L);
                 httpSession.setAttribute("member", memberService.findById(memberService.findByEmail(member.getEmail())));
                 httpSession.setAttribute("pageList",pageList);
                 return "redirect:/home";
@@ -83,6 +82,8 @@ public class MemberController {
     public String Auth(HttpSession httpSession, Mail mail, Model model){
         if(memberService.mailCertification(String.valueOf(httpSession.getAttribute("mail")), mail.getNumber())){
             httpSession.setAttribute("member", memberService.findById(memberService.findByEmail((String)httpSession.getAttribute("mail"))));
+            List <Long> pageList = new ArrayList<>();
+            httpSession.setAttribute("pageList",pageList);
             return "redirect:/home";
         }
         model.addAttribute("nick",httpSession.getAttribute("mail"));

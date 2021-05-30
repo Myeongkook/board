@@ -23,4 +23,7 @@ public class Comment {
 
     @Column(name = "comment_text",nullable = false)
     private String text;
+
+    @Column(name = "comment_deleted")
+    private boolean deleted;
 }

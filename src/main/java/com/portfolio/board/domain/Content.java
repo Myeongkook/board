@@ -7,6 +7,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -32,6 +34,9 @@ public class Content {
 
     @Column(name = "content_hit",columnDefinition = "integer default 0")
     private int hitCount;
+
+    @OneToMany(mappedBy = "content")
+    private List<ContentStatus> contentStatusList = new ArrayList<>();
 
     @CreationTimestamp
     @Column(name = "content_datetime")

@@ -10,7 +10,7 @@ public interface ContentService {
     void saveContent(Content content);
     List<Content> viewAllContent();
     Content readContent(Long id);
-    Boolean deleteContent(Long id);
+    void deleteContent(Long id);
     void saveComment(Comment comment);
     List<Comment> ViewAllComment(Long id);
     void CountingGood(ContentStatus contentStatus);
