@@ -17,4 +17,6 @@ public interface ContentRepository {
     Long viewGoodCount(Long id);
     Long saveGoodCount(ContentStatus contentStatus);
     Long deleteComment(Long id);
+    Long findStatusByCommentAndMember(ContentStatus contentStatus);
+    void deleteStatus(Long id);
 }

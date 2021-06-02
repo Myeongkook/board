@@ -6,6 +6,7 @@ import com.portfolio.board.domain.ContentStatus;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
@@ -80,5 +81,24 @@ public class ContentRepoImpl implements ContentRepository{
         Comment comment = em.find(Comment.class, id);
         em.remove(comment);
         return comment.getContent().getId();
+    }
+
+    @Override
+    public Long findStatusByCommentAndMember(ContentStatus contentStatus) {
+        try{
+            ContentStatus singleResult = em.createQuery("select c from ContentStatus c where c.content = :content and c.member = : member", ContentStatus.class)
+                    .setParameter("content", contentStatus.getContent())
+                    .setParameter("member", contentStatus.getMember())
+                    .getSingleResult();
+            return singleResult.getId();
+        }catch (NoResultException e){
+            return 0L;
+        }
+    }
+
+    @Override
+    public void deleteStatus(Long id) {
+        ContentStatus contentStatus = em.find(ContentStatus.class, id);
+        em.remove(contentStatus);
     }
 }

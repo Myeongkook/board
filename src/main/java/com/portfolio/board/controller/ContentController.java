@@ -7,6 +7,7 @@ import com.portfolio.board.domain.Member;
 import com.portfolio.board.repository.MemberRepository;
 import com.portfolio.board.service.ContentService;
 import com.portfolio.board.service.MemberService;
+import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -95,5 +96,20 @@ public class ContentController {
     @RequestMapping(value = "comment/delete/{comment_id}",method = RequestMethod.POST)
     public String deleteComment(@PathVariable Long comment_id){
         return "redirect:/read/" + contentService.findByCommentIdAndDeleteComment(comment_id);
+    }
+
+    @RequestMapping(value = "/modify/{content_id}",method = RequestMethod.GET)
+    public ModelAndView modifyContent(@PathVariable Long content_id){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("content",contentService.readContent(content_id));
+        modelAndView.setViewName("/modify");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/modify/{content_id}",method = RequestMethod.POST)
+    public String modifyContent(@PathVariable Long content_id, Content content){
+        content.setId(content_id);
+        // contentService.modifyContent(content);
+        return "redirect:/read/" + content_id;
     }
 }

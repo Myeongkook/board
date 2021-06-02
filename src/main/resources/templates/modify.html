@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<form action="/modify/" method="post" th:attrappend="action=${content_id}">
+    <table>
+        <tr>
+            <th>제목</th>
+            <td><label>
+                <input type="text" id="subject" th:value="${content.getSubject()}">
+            </label></td>
+        </tr>
+        <tr>
+            <th>내용</th>
+            <td><label>
+                <textarea id="text" th:text="${content.getText()}"></textarea>
+            </label></td>
+        </tr>
+    </table>
+    <button type="submit">수정</button>
+</form>
+</body>
+</html>

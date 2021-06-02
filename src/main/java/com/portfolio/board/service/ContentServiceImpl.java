@@ -59,7 +59,13 @@ public class ContentServiceImpl implements ContentService{
     @Override
     @Transactional
     public void CountingGood(ContentStatus contentStatus) {
-        contentRepository.saveGoodCount(contentStatus);
+        Long statusByCommentAndMember = contentRepository.findStatusByCommentAndMember(contentStatus);
+        if(statusByCommentAndMember > 0L){
+            contentRepository.deleteStatus(statusByCommentAndMember);
+        }else {
+            contentRepository.saveGoodCount(contentStatus);
+        }
+
     }
 
     @Override
@@ -77,5 +83,14 @@ public class ContentServiceImpl implements ContentService{
     @Transactional
     public void CountingHit(Long id) {
         contentRepository.countHit(id);
+    }
+
+    @Override
+    @Transactional
+    public void modifyContent(Content content) {
+        Content byId = contentRepository.findById(content.getId());
+        byId.setSubject(content.getSubject());
+        byId.setText(content.getText());
+        contentRepository.save(byId);
     }
 }
