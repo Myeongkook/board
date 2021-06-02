@@ -109,7 +109,7 @@ public class ContentController {
     @RequestMapping(value = "/modify/{content_id}",method = RequestMethod.POST)
     public String modifyContent(@PathVariable Long content_id, Content content){
         content.setId(content_id);
-        // contentService.modifyContent(content);
+        contentService.modifyContent(content);
         return "redirect:/read/" + content_id;
     }
 }

@@ -13,13 +13,13 @@
         <tr>
             <th>제목</th>
             <td><label>
-                <input type="text" id="subject" th:value="${content.getSubject()}">
+                <input type="text" name="subject" th:value="${content.getSubject()}">
             </label></td>
         </tr>
         <tr>
             <th>내용</th>
             <td><label>
-                <textarea id="text" th:text="${content.getText()}"></textarea>
+                <textarea name="text" th:text="${content.getText()}"></textarea>
             </label></td>
         </tr>
     </table>
