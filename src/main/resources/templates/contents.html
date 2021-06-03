@@ -20,7 +20,7 @@
   </tbody>
   <a href="/home">뒤로가기</a>
 </table>
-<a href="/read/good/" th:attrappend="href=${content_id}">좋아요</a><a href="/modify/" th:attrappend="href=${content_id}">글 수정</a>
+<a href="/read/good/" th:attrappend="href=${content_id}">좋아요</a><a th:if="${content.getMember().getId()} == ${member.getId()}" href="/modify/" th:attrappend="href=${content_id}">글 수정</a>
 <form action="/delete/" method="post" th:attrappend="action=${content_id}" th:if="${content.getMember().getName()} == ${member.getName()}">
   <button type="submit">삭제</button>
 </form>

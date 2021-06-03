@@ -11,13 +11,23 @@
             }
         });
     </script>
+    <style>
+        .container{
+            display: flex;
+            justify-content: center;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <div class="item">
 <p th:text="'메일인증 페이지입니다. 안녕하세요 ' + ${nick}"><br>
 <form action="/auth" method="post">
     <label>인증번호 : <input type="text" name="number"></label>
     <input type="submit" value="인증하기">
     <input type="text" hidden="hidden" th:value="${result}" id="auth_result">
 </form>
+</div>
+</div>
 </body>
 </html>

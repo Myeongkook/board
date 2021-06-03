@@ -10,6 +10,7 @@ import com.portfolio.board.service.MemberService;
 import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -73,11 +74,12 @@ public class ContentController {
     }
 
     @RequestMapping(value = "/comment/{content_id}", method = RequestMethod.POST)
-    public String writeComment(@PathVariable Long content_id, Comment comment, HttpSession httpSession){
+    public String writeComment(@PathVariable Long content_id, Comment comment, HttpSession httpSession, Model model){
         comment.setContent(contentService.readContent(content_id));
         comment.setMember((Member)httpSession.getAttribute("member"));
         if (comment.getText().length() < 1){
-            return "error";
+            model.addAttribute("result",false);
+            return "redirect:/read/" + content_id;
         }
         contentService.saveComment(comment);
         return "redirect:/read/" + content_id;
