@@ -13,19 +13,38 @@
     </script>
     <style>
         .container{
+            height: 100vh;
+            width: 100vw;
             display: flex;
             justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: whitesmoke;
+        }
+        p{
+            font-weight: bold;
+            font-size: 25px;
+        }
+
+        .item{
+            padding: 10%;
+            background-color: #ece6cc;
+            height: 20%;
+        }
+        label{
+            font-weight: bold;
+            font-size: 20px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="item">
-<p th:text="'메일인증 페이지입니다. 안녕하세요 ' + ${nick}"><br>
+            <p th:text="${nick}+'로 인증번호가 발송되었습니다.'">에</p>
 <form action="/auth" method="post">
-    <label>인증번호 : <input type="text" name="number"></label>
-    <input type="submit" value="인증하기">
-    <input type="text" hidden="hidden" th:value="${result}" id="auth_result">
+    <label>인증번호  <input type="text" name="number"></label>
+    <input type="submit" value="확인">
+    <label for="auth_result"></label><input type="text" hidden="hidden" th:value="${result}" id="auth_result">
 </form>
 </div>
 </div>
