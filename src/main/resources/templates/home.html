@@ -5,25 +5,74 @@
     <title>Title</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 </head>
+<style>
+    body{
+        margin: 0 auto;
+    }
+    .container{
+            margin-top: 10%;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            background-color: #ece6cc;
+            height: 50%;
+            
+        }
+        table{
+            padding: 5%;
+            border: whitesmoke solid;
+            width: 60%;
+            height: 50%;
+            border-spacing: 25px 10px;
+        }
+        a{
+            display: block;
+            text-decoration: none;
+            color: black;
+        }
+        
+        a.top-menu{
+            font-weight: bold;
+            
+            height: 50px;
+            transition: 0.2s;
+        }
+
+        .top-menu:hover{
+            font-size: 120%;
+        }
+
+        div.uu{
+            display: flex;
+        }
+        span.bar {
+            margin: 0 0.2rem;
+        }
+</style>
 <body>
-Home Page
-<a href="/write">글쓰기</a>
-<a href="/logout">로그아웃</a>
+<div class="container">
+    <div class="uu">
+<a href="/write" class="top-menu">Write</a>
+<span class="bar">&#124;</span>
+<a href="/logout" class="top-menu">Logout</a></div>
 <br>
 <table>
     <thead>
     <tr>
-        <th>제목</th>
-        <th>글쓴이</th>
-        <th>조회수</th>
-        <th>추천수</th>
-        <th>작성일</th>
+        <th colspan="2">Title</th>
+        <th></th>
+        <th>Writer</th>
+        <th>Hit</th>
+        <th>Good</th>
+        <th>Date</th>
     </tr>
     </thead>
     <tbody>
     <tr class="content" th:each="content, i : ${list}">
-        <td class="title">
+        <td class="title" colspan="2">
             <a href="/read/" th:attrappend="href=${content.getId()}" th:text="${content.subject}"></a></td>
+        <td></td>
         <td th:text="${content.getMember().getName()}"></td>
         <td th:text="${content.getHitCount()}"></td>
         <td th:text="${content.getContentStatusList().size()}"></td>
@@ -31,5 +80,6 @@ Home Page
     </tr>
     </tbody>
 </table>
+</div>
 </body>
 </html>
