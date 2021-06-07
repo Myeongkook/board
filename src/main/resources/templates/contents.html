@@ -4,40 +4,94 @@
   <meta charset="UTF-8">
   <title>Title</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <style>
+            body{
+            margin: 0 auto;
+        }
+        .container{
+            margin-top: 5%;
+            background-color: #ece6cc;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+            margin-right: 5px;
+        }
+        .button{
+            display: flex;
+            height: 22px;
+            margin-bottom: 20px;
+        }
+        form textarea{
+            width: 300px;
+            height: 100px;
+            resize: none;
+        }
+        form{
+            margin: 0 auto;
+        }
+        div.comment{
+          width: 500px;
+          margin-left: 30%;
+          margin-top: 20px;
+        }
+        .comment table td{
+          border-bottom: black dotted;
+          margin-top: 10px;
+          width: 58px;
+        }
+  </style>
 </head>
 <body>
+  <div class="container">
 <table>
   <thead>
   <tr>
-    <th>제목</th><td th:text="${content.getSubject()}"></td>
-    <th>글쓴이</th><td th:text="${content.getMember().getName()}"></td>
-    <th>내용</th><td th:text="${content.getText()}"></td>
-    <th>좋아요</th><td th:text="${good}"></td>
+    <th>Title : </th><td th:text="${content.getSubject()}"></td>
+  </tr>
+  <tr>
+    <th>Writer : </th><td th:text="${content.getMember().getName()}"></td>
+    <th>Good :</th><td th:text="${good}"></td>
   </tr>
   </thead>
   <tbody>
-
+    <td><p th:text="${content.getText()}"></p></td>
   </tbody>
-  <a href="/home">뒤로가기</a>
-</table>
-<a href="/read/good/" th:attrappend="href=${content_id}">좋아요</a><a th:if="${content.getMember().getId()} == ${member.getId()}" href="/modify/" th:attrappend="href=${content_id}">글 수정</a>
-<form action="/delete/" method="post" th:attrappend="action=${content_id}" th:if="${content.getMember().getName()} == ${member.getName()}">
-  <button type="submit">삭제</button>
+</table><div class="button">
+<a href="/read/good/" th:attrappend="href=${content_id}">좋아요</a>
+<a th:if="${content.getMember().getId()} == ${member.getId()}" href="/modify/" th:attrappend="href=${content_id}">글 수정</a>
+<form class="content_delete" action="/delete/" method="post" th:attrappend="action=${content_id}" th:if="${content.getMember().getName()} == ${member.getName()}">
+  <a href="javascript:$('.content_delete').submit()">삭제</a>
 </form>
-<form action="/comment/" method="post" th:attrappend="action=${content_id}">
+<a href="/home">목록</a>
+</div>
+<form action="/comment/" method="post" th:attrappend="action=${content_id}" class="comment_write">
   <label>Comments
     <textarea style="resize: none" name="text"></textarea>
-  </label><br>
+  </label>
   <button type="submit">확인</button>
-</form><br>
+</form>
+<div class="comment">
 <table>
   <tbody>
     <tr th:each="comment : ${comments}">
-      <td th:text="${comment.getText()}"></td>
+      <td th:text="${comment.getText()}" colspan="3"></td>
+      <td></td>
+      <td></td>
       <td th:text="${comment.getMember().getName()}"></td>
-      <td th:if="${comment.getMember().getName()} == ${member.getName()}"><form action="/comment/delete/" method="post" th:attrappend="action=${comment.getId()}"><button type="submit">삭제</button></form></td>
+      <td th:if="${comment.getMember().getName()} == ${member.getName()}">
+        <form action="/comment/delete/" method="post" th:attrappend="action=${comment.getId()}">
+          <button type="submit">삭제</button>
+        </form></td>
     </tr>
   </tbody>
 </table>
+</div>
+</div>
 </body>
 </html>
